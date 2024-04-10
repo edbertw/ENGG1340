@@ -6,7 +6,7 @@ Edbert Widjaja (3036240503),
 Sebastian Nicholas Kusuma (3036191300)
 
 WELCOME TO OUR GAME, SNAKE !!
-When you first start the game, you will be given 3 options to Login, Register and check Leaderboard. Since you are probably a new player, you must register your name and password, then you will be sent to the game page where you can start playing.
+When you first start the game, you will be given 3 options to start game, check leaderboard and quit. Since you are probably a new player, you must start the game and register your name and password, then you will be sent to the game page where you can start playing.
 
 Your goal is to collect as many tokens as possible. Each token collected grants you 10 points. Throughout the game, there will be many randomly generated blocks and tokens. Avoiding the outer-walls and the randomly spawning blocks will allow you to survive the game. As you collect tokens, your snake will increase in size. Be careful not to hit your own snake's body, as doing so will immediately result in your defeat. Also, notice that your snake will keep on moving by itself and it is your duty to control its direction.
 
@@ -30,4 +30,8 @@ LIST OF HEADERS & LIBRARIES USED:
 - iostream = I/O operations
 - sstream = string input for menu and interface
 - string = string text and manipulations
+
+EXECUTION INSTRUCTIONS:
+Since we will also be providing a makefile for efficiency purposes, simply do make Test to compile all of the targets and its dependencies and run the program. You can do make clean to remove any targets that have been made after compilation.
+
   
