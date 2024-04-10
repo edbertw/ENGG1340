@@ -15,4 +15,5 @@ In the game of Snake, the player uses the arrow keys to move a "snake" around th
 LIST OF FEATURES :
 - Randomly generating tokens and blocks = Generating random game situations as the position of blocks and tokens vary for every game.
 - Leaderboard and Storing Usernames, Passwords, Highscore = We implemented File I/O to keep track of changing highscores as well as initial input of username and password.
+- Automated moving and increasing size snake = Implemented STL Container (vectors) to allow snake to increase in size  
   
