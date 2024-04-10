@@ -10,3 +10,7 @@ When you first start the game, you will be given 3 options to Login, Register an
 
 Your goal is to collect as many tokens as possible. Each token collected grants you 10 points. Throughout the game, there will be many randomly generated blocks and tokens. Avoiding the outer-walls and the randomly spawning blocks will allow you to survive the game. As you collect tokens, your snake will increase in size. Be careful not to hit your own snake's body, as doing so will immediately result in your defeat. Also, notice that your snake will keep on moving by itself and it is your duty to control its direction.
 
+LIST OF FEATURES :
+- Randomly generating tokens and blocks = Generating random game situations as the position of blocks and tokens vary for every game.
+- Leaderboard and Storing Usernames, Passwords, Highscore = We implemented File I/O to keep track of changing highscores as well as initial input of username and password.
+  
