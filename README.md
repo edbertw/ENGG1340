@@ -19,8 +19,8 @@ In the game of Snake, the player uses the arrow keys to move a "snake" around th
 LIST OF FEATURES :
 - Randomly generating tokens and blocks = Generating random game situations as the position of blocks and tokens vary for every game.
 - Leaderboard and Storing Usernames, Passwords, Highscore = We implemented File I/O to keep track of changing highscores as well as initial input of username and password for our leaderboard.
-- Automated moving and increasing size snake = Implemented STL Container (Vectors) to allow snake to increase in size by pushing to vector.
-- Block Generation = STL Containers (Vectors) to store multiple element blocks that randomly appear on the map.
+- Automated moving and increasing size snake = Implemented STL Container (Vectors) with pair of integers to allow snake to increase in size by pushing to vector.
+- Block Generation = STL Containers (Vectors) with pair of integers to store multiple element blocks that randomly appear on the map.
 
 LIST OF HEADERS & LIBRARIES USED:
 - ncurses.h = creates our game's user interface and allows automated moving and continuous input of arrow keys
