@@ -174,3 +174,45 @@ bool loginUser(const string& filename, User& currentUser) {
     }
     return false;
 }
+
+// This function displays our menu page on the center (with colors) and takes no input parameters
+void displayMenuPage() {
+    int maxWidth, maxHeight;
+    getmaxyx(stdscr, maxHeight, maxWidth); // Get the size of the terminal window
+
+    clear(); // Clear the screen using NCurses
+
+    // Use NCurses attributes for color if desired
+    start_color();
+    init_pair(1, COLOR_GREEN, COLOR_BLACK); // Green text on black background
+
+    vector<string> lines = {
+        "=============================================",
+        "  _________              __                  ",
+        " /   _____/ ____ _____  |  | __ ____   ______",
+        " \\_____  \\ /    \\\\__  \\ |  |/ // __ \\ /  ___/",
+        " /        \\   |  \\/ __ \\|    <\\  __/ \\__ \\",
+        "/_______  /|  (___  /|_ \\\\___  >____  >",
+        "        \\/     \\/     \\/     \\/    \\/     \\/",
+        "============================================="
+    };
+
+    int startY = (maxHeight - lines.size() - 4) / 2; // Center the content vertically
+    int startX = 0;
+
+    attron(COLOR_PAIR(1)); // Turn on green text color
+    for (size_t i = 0; i < lines.size(); ++i) {
+        startX = (maxWidth - lines[i].length()) / 2; // Center the content horizontally
+        mvprintw(startY + i, startX, "%s", lines[i].c_str());
+    }
+    attroff(COLOR_PAIR(1)); // Turn off green text color
+
+    // Display menu options
+    startX = (maxWidth - 20) / 2; // "20" is the approximate length of the longest menu string
+    mvprintw(startY + lines.size() + 1, startX, "1. Login");
+    mvprintw(startY + lines.size() + 2, startX, "2. Registration");
+    mvprintw(startY + lines.size() + 3, startX, "3. Quit");
+    //mvprintw(startY + lines.size() + 1, startX - 3, "->"); // Arrow to highlight option
+
+    refresh(); // Refresh the screen to display changes
+}
