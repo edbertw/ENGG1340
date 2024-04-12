@@ -110,3 +110,67 @@ bool registerUser(const string& filename) { //Takes the name of the file as inpu
     }
     getch(); // Wait for user input
 }
+
+// Check if username exist and password is correct
+bool loginUser(const string& filename, User& currentUser) {
+    clear();
+    int attempts = 3;
+    string username, password;
+    bool wrong = false;
+    bool exist = false;
+    User user;
+
+    vector<User> users;
+    ifstream fin(filename);
+    while (fin >> user.username >> user.password >> user.highestScore) {
+        users.push_back(user);
+    }
+    fin.close();
+
+    while ( attempts > 0 ) {
+        PrintCenterInput("Enter username: ", username);
+        endwin();
+	clear();
+        for ( const auto& usr : users ) {
+            if (usr.username == username) {
+                exist = true;
+                user = usr; 
+                break; 
+            }
+        }
+
+        if ( !exist ) {
+            PrintCenter("User does not exist.\n");
+            getch();
+            return false;
+        }
+
+        PrintCenterInput("Enter password: ", password);
+        endwin();
+        clear();
+
+        if (user.password == password) {
+            currentUser = user;
+            return true;
+        } else {
+            wrong = true;
+        }
+
+        if (wrong) {
+            --attempts; 
+            if (attempts > 0) {
+                PrintCenter(("Wrong Password. " + std::to_string(attempts) + " attempts left.\n").c_str());
+                getch();
+                endwin();
+                clear();
+            } else {
+                PrintCenter("Login failed. No attempts left.\n");
+                getch();
+                endwin();
+                clear();
+                return false; 
+            }
+        }
+    }
+    return false;
+}
