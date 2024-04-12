@@ -56,3 +56,57 @@ void PrintCenterInput(const char* prompt, string& input) {
     noecho(); // Turn off echoing
     input = buffer;
 }
+
+// The function registers username and password and stores it in users.txt
+bool registerUser(const string& filename) { //Takes the name of the file as input parameter and returns if successful registration
+    bool userExists = false;
+    string username, password;
+
+    do {
+        clear();
+        PrintCenterInput("Enter username (or type 'exit' to cancel): ", username);
+        if (username=="exit") {
+	    return false;
+	} else {
+	    endwin();
+	    clear();
+        }
+        // Check if the user already exists
+        ifstream fin(filename);
+        string checkUsername, dummyPassword;
+        int dummyScore;
+        userExists = false;
+
+        while (fin >> checkUsername >> dummyPassword >> dummyScore) {
+            if (checkUsername == username) {
+                userExists = true;
+                break;
+            }
+        }
+        fin.close();
+
+        if (userExists) {
+            PrintCenter("User already exists. Please try a different username.\n");
+            getch(); // Wait for user input
+	    endwin();
+	    clear();
+	    return false;
+        }
+
+    } while (userExists);
+
+    PrintCenterInput("Enter password: ", password);
+    endwin();
+    clear();
+
+    User user = {username, password, 0};
+
+    // Append the new user to the file
+    ofstream fout(filename, ios::app);
+    if (fout.is_open()) {
+        fout << user.username << " " << user.password << " " << user.highestScore << "\n";
+        fout.close();
+        return true;
+    }
+    getch(); // Wait for user input
+}
