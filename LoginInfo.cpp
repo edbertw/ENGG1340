@@ -216,3 +216,83 @@ void displayMenuPage() {
 
     refresh(); // Refresh the screen to display changes
 }
+
+int main() {
+    initscr();
+    cbreak();
+    noecho();
+    keypad(stdscr, TRUE);
+
+    int choice = 1;
+    bool running = true;
+    int maxWidth, maxHeight;
+    getmaxyx(stdscr, maxHeight, maxWidth);
+    int menuStartX = (maxWidth - 20) / 2; 
+
+    displayMenuPage();
+
+    // Highlight the first option initially
+    mvprintw((maxHeight / 2) + 3, menuStartX - 3, "->");
+
+    while (running) {
+        int ch = getch();
+        switch (ch) {
+            case KEY_DOWN:
+                mvprintw((maxHeight / 2) + 2 + choice, menuStartX - 3, "  ");
+                choice = (choice % 3) + 1; // Loop back around to the first option
+                mvprintw((maxHeight / 2) + 2 + choice, menuStartX - 3, "->");
+                break;
+            case KEY_UP:
+                mvprintw((maxHeight / 2) + 2 + choice, menuStartX - 3, "  ");
+                choice = (choice == 1) ? 3 : choice - 1; // Loop back around to the last option
+                mvprintw((maxHeight / 2) + 2 + choice, menuStartX - 3, "->");
+                break;
+            case '\n':
+                if (choice == 1) {
+                    if (!loginUser(filename, currentUser)) {
+                        PrintCenter("Please try again or register.\n");
+			getch();
+			displayMenuPage();
+			mvprintw((maxHeight / 2) + 3, menuStartX - 3, "->");
+                        initscr();
+                        cbreak();
+                        noecho();
+                        keypad(stdscr, TRUE);
+                    } else {
+                        PrintCenter("Login successful. Welcome, %s!\n", currentUser.username.c_str());
+                        getch();
+                        endwin();
+                        system(("./menu " + currentUser.username).c_str());
+                        return 0;
+                    }
+                } else if (choice == 2) {
+                    if (!registerUser(filename)) {
+		                displayMenuPage();
+			            mvprintw((maxHeight / 2) + 4, menuStartX - 3, "->");
+			            initscr();
+                        cbreak();
+                        noecho();
+                        keypad(stdscr, TRUE);
+		            } else {
+		                PrintCenter("Registration Successful! Welcome, %s!\n", currentUser.username.c_str());
+			            getch();
+			            displayMenuPage();
+                        mvprintw((maxHeight / 2) + 4, menuStartX - 3, "->");
+                        initscr();
+                        cbreak();
+                        noecho();
+                        keypad(stdscr, TRUE);
+		            }
+                } else if ( choice == 3 ) {
+                    running = false;
+                    endwin();
+                    exit(0);
+                }
+                break;
+            }
+        }
+    clear();
+    refresh();
+    endwin();
+    return 0;
+}
