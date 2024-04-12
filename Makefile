@@ -13,7 +13,7 @@ Run : login
 	./login
 
 clean :
-	rm -f Login Menu Snake_Game
+	rm -f login menu Snake_Game
 
 .PHONY : clean
 
