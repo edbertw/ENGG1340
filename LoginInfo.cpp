@@ -46,3 +46,13 @@ void PrintCenter(const char* format, ...) { //The input parameters are a format 
     // Clean up memory
     delete[] str;
 }
+
+// Make user's input to be displayed on the centre of the screen as they type
+void PrintCenterInput(const char* prompt, string& input) {
+    echo(); // Turn on echoing 
+    char buffer[256];
+    PrintCenter(prompt); // Display Prompt
+    getnstr(buffer, 255); // Read input
+    noecho(); // Turn off echoing
+    input = buffer;
+}
