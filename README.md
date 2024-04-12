@@ -6,9 +6,11 @@ Edbert Widjaja (3036240503),
 Sebastian Nicholas Kusuma (3036191300)
 
 WELCOME TO OUR GAME, SNAKE !!
-When you first start the game, you will be given 3 options to start game, check leaderboard and quit. Since you are probably a new player, you must start the game and register your name and password, then you will be sent to the game page where you can start playing.
+When you first start the game, you will be given 3 options to Login, Register yourself and Quit. Since you are probably a new player, you must start the game and register your username and password, then you will need to login again with the username and password you have registered.
 
-If you've played already, then you can simply enter your username and password to start playing.
+If you've played already, then you can simply login, enter your username and password to start game.
+
+You can also check the leaderboard with a list of usernames and their high scores in descending order.
 
 Your goal is to collect as many tokens as possible. Each token collected grants you 10 points. Throughout the game, there will be many randomly generated blocks and tokens. Avoiding the outer-walls and the randomly spawning blocks will allow you to survive the game. As you collect tokens, your snake will increase in size. Be careful not to hit your own snake's body, as doing so will immediately result in your defeat. Also, notice that your snake will keep on moving by itself and it is your duty to control its direction.
 
@@ -16,7 +18,7 @@ In the game of Snake, the player uses the arrow keys to move a "snake" around th
 
 LIST OF FEATURES :
 - Randomly generating tokens and blocks = Generating random game situations as the position of blocks and tokens vary for every game.
-- Leaderboard and Storing Usernames, Passwords, Highscore = We implemented File I/O to keep track of changing highscores as well as initial input of username and password.
+- Leaderboard and Storing Usernames, Passwords, Highscore = We implemented File I/O to keep track of changing highscores as well as initial input of username and password for our leaderboard.
 - Automated moving and increasing size snake = Implemented STL Container (Vectors) to allow snake to increase in size by pushing to vector.
 - Block Generation = STL Containers (Vectors) to store multiple element blocks that randomly appear on the map.
 
@@ -34,6 +36,6 @@ LIST OF HEADERS & LIBRARIES USED:
 - string = string text and manipulations
 
 EXECUTION INSTRUCTIONS:
-Since we will also be providing a makefile for efficiency purposes, simply do make Test to compile all of the targets and its dependencies and run the program. You can do make clean to remove any targets that have been made after compilation.
+Since we will also be providing a makefile for efficiency purposes, simply do make Snake_Game, then make menu, then make login, then make Run to compile all of the targets and run the program. *IMPORTANT* Please ignore all warning messages. The warning messages will not affect our program in any way. You can do make clean to remove any targets that have been made after compilation.
 
   
