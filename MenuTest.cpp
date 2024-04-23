@@ -9,11 +9,6 @@
 using namespace std;
 
 string filename="users.txt";
-struct User {
-    string username;
-    string password;
-    int highestScore;
-};
 
 User currentUser;
 void displayMenuPage();
