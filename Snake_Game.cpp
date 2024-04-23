@@ -372,7 +372,7 @@ void GameOver(){
     clear(); // Optionally clear the screen before restarting or exiting
 } // Game Over function that displays user's score, highscore, and prompts the user to either quit the game or restart the game
 
-void updateHighestScore(){
+void updateHighestScore(const string &filename){
     vector<User> users;
     bool found = false;
     ifstream fileIn(filename);
