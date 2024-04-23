@@ -9,109 +9,98 @@
 #include <cstring>
 using namespace std;
 
-string filename="users.txt";
+string filename = "users.txt";
 
 User currentUser;
 void displayMenuPage();
 
-//The PrintCenter function prints the text to be displayed at center of screen
-void PrintCenter(const char* format, ...) { //The input parameters are a format string to specify the desired format and text of the output
-    // Outputs are in the form of the string to be displayed
-    int screenWidth, screenHeight;
-    getmaxyx(stdscr, screenHeight, screenWidth); // Get the screen size
+//Prints the text to be displayed at center of screen
+void PrintCenter(const char* format, ...) { 
+    int sW, sH;
+    getmaxyx(stdscr, sH, sW); 
 
     va_list args;
     va_start(args, format);
 
-    // We need to calculate the length of the formatted string.
-    // vsnprintf with nullptr and 0 as buffer and size will return the required length for the formatted string.
-    int len = vsnprintf(nullptr, 0, format, args) + 1; // +1 for '\0'
+    int len = vsnprintf(nullptr, 0, format, args) + 1; 
     va_end(args);
 
-    // Allocate memory for the formatted string
     char* str = new char[len];
 
-    // Format the string
     va_start(args, format);
     vsnprintf(str, len, format, args);
     va_end(args);
 
-    // print the formatted string at the center of the screen
-    mvprintw(screenHeight / 2, (screenWidth - strlen(str)) / 2, "%s", str);
-
-    // Clean up memory
+    mvprintw(sH / 2, (sW - strlen(str)) / 2, "%s", str);
     delete[] str;
 }
 
 // Make user's input to be displayed on the centre of the screen as they type
 void PrintCenterInput(const char* prompt, string& input) {
-    echo(); // Turn on echoing 
+    echo(); 
     char buffer[256];
-    PrintCenter(prompt); // Display Prompt
-    getnstr(buffer, 255); // Read input
-    noecho(); // Turn off echoing
+    PrintCenter(prompt); 
+    getnstr(buffer, 255); 
+    noecho(); 
     input = buffer;
 }
 
-// The function registers username and password and stores it in users.txt
-bool registerUser(const string& filename) { //Takes the name of the file as input parameter and returns if successful registration
-    bool userExists = false;
-    string username, password;
+// Registers username and password and stores it in users.txt
+bool registerUser(const string& filename) { 
+    bool uexist = false;
+    string uname, pass;
 
     do {
         clear();
-        PrintCenterInput("Enter username (or type 'exit' to cancel): ", username);
-        if (username=="exit") {
-	    return false;
-	} else {
-	    endwin();
-	    clear();
+        PrintCenterInput("Enter username (or type 'exit' to cancel): ", uname);
+        if ( uname == "exit" ) {
+            return false;
+        } 
+        else {
+	        endwin();
+	        clear();
         }
-        // Check if the user already exists
-        ifstream fin(filename);
-        string checkUsername, dummyPassword;
-        int dummyScore;
-        userExists = false;
 
-        while (fin >> checkUsername >> dummyPassword >> dummyScore) {
-            if (checkUsername == username) {
-                userExists = true;
+        ifstream fin(filename);
+        string cuname, dpass;
+        int dscore;
+        uexist = false;
+
+        while (fin >> cuname >> dpass >> dscore) {
+            if (cuname == uname) {
+                uexist = true;
                 break;
             }
         }
         fin.close();
 
-        if (userExists) {
+        if ( uexist ) {
             PrintCenter("User already exists. Please try a different username.\n");
-            getch(); // Wait for user input
+            getch(); 
 	    endwin();
 	    clear();
-	    return false;
-        }
+	    return false; }
 
-    } while (userExists);
+    } while ( uexist );
 
-    PrintCenterInput("Enter password: ", password);
+    PrintCenterInput("Enter password: ", pass);
     endwin();
     clear();
 
-    User user = {username, password, 0};
+    User user = {uname, pass, 0};
 
-    // Append the new user to the file
     ofstream fout(filename, ios::app);
     if (fout.is_open()) {
         fout << user.username << " " << user.password << " " << user.highestScore << "\n";
         fout.close();
         return true;
     }
-    getch(); // Wait for user input
-}
+    getch(); }
 
-// Check if username exist and password is correct
 bool loginUser(const string& filename, User& currentUser) {
     clear();
-    int attempts = 3;
-    string username, password;
+    int att = 3;
+    string username, pass;
     bool wrong = false;
     bool exist = false;
     User user;
@@ -123,12 +112,12 @@ bool loginUser(const string& filename, User& currentUser) {
     }
     fin.close();
 
-    while ( attempts > 0 ) {
-        PrintCenterInput("Enter username: ", username);
+    while ( att > 0 ) {
+        PrintCenterInput("Enter username: ", uname);
         endwin();
-	clear();
+	    clear();
         for ( const auto& usr : users ) {
-            if (usr.username == username) {
+            if (usr.username == uname) {
                 exist = true;
                 user = usr; 
                 break; 
@@ -141,21 +130,21 @@ bool loginUser(const string& filename, User& currentUser) {
             return false;
         }
 
-        PrintCenterInput("Enter password: ", password);
+        PrintCenterInput("Enter password: ", pass);
         endwin();
         clear();
 
-        if (user.password == password) {
+        if (user.password == pass) {
             currentUser = user;
             return true;
         } else {
             wrong = true;
         }
 
-        if (wrong) {
-            --attempts; 
-            if (attempts > 0) {
-                PrintCenter(("Wrong Password. " + std::to_string(attempts) + " attempts left.\n").c_str());
+        if ( wrong ) {
+            --att; 
+            if (att > 0) {
+                PrintCenter(("Wrong Password. " + std::to_string(att) + " attempts left.\n").c_str());
                 getch();
                 endwin();
                 clear();
@@ -168,18 +157,17 @@ bool loginUser(const string& filename, User& currentUser) {
             }
         }
     }
-    return false;}
+    return false;
+}
 
-// This function displays our menu page on the center (with colors) and takes no input parameters
+// Displays menu page on the center
 void displayMenuPage() {
-    int maxWidth, maxHeight;
-    getmaxyx(stdscr, maxHeight, maxWidth); // Get the size of the terminal window
+    int maxW, maxH;
+    getmaxyx(stdscr, maxH, maxW); 
+    clear(); 
 
-    clear(); // Clear the screen using NCurses
-
-    // Use NCurses attributes for color if desired
     start_color();
-    init_pair(1, COLOR_GREEN, COLOR_BLACK); // Green text on black background
+    init_pair(1, COLOR_GREEN, COLOR_BLACK); 
 
     vector<string> lines = {
         "=============================================",
@@ -192,23 +180,22 @@ void displayMenuPage() {
         "============================================="
     };
 
-    int startY = (maxHeight - lines.size() - 4) / 2; // Center the content vertically
-    int startX = 0;
+    int sY = (maxH - lines.size() - 4) / 2; 
+    int sX = 0;
 
-    attron(COLOR_PAIR(1)); // Turn on green text color
+    attron(COLOR_PAIR(1)); 
     for (size_t i = 0; i < lines.size(); ++i) {
-        startX = (maxWidth - lines[i].length()) / 2; // Center the content horizontally
-        mvprintw(startY + i, startX, "%s", lines[i].c_str());}
-    attroff(COLOR_PAIR(1)); // Turn off green text color
+        startX = (maxW - lines[i].length()) / 2; 
+        mvprintw(sY + i, startX, "%s", lines[i].c_str());
+    }
+    attroff(COLOR_PAIR(1)); 
 
-    // Display menu options
-    startX = (maxWidth - 20) / 2; // "20" is the approximate length of the longest menu string
-    mvprintw(startY + lines.size() + 1, startX, "1. Login");
-    mvprintw(startY + lines.size() + 2, startX, "2. Registration");
-    mvprintw(startY + lines.size() + 3, startX, "3. Quit");
-    //mvprintw(startY + lines.size() + 1, startX - 3, "->"); // Arrow to highlight option
+    sX = (maxW - 20) / 2; 
+    mvprintw(sY + lines.size() + 1, sX, "1. Login");
+    mvprintw(sY + lines.size() + 2, sX, "2. Registration");
+    mvprintw(sY + lines.size() + 3, sX, "3. Quit");
 
-    refresh(); // Refresh the screen to display changes
+    refresh(); 
 }
 
 int main() {
@@ -219,27 +206,26 @@ int main() {
 
     int choice = 1;
     bool running = true;
-    int maxWidth, maxHeight;
-    getmaxyx(stdscr, maxHeight, maxWidth);
-    int menuStartX = (maxWidth - 20) / 2; 
+    int maxW, maxH;
+    getmaxyx(stdscr, maxH, maxW);
+    int menuStartX = (maxW - 20) / 2; 
 
     displayMenuPage();
 
-    // Highlight the first option initially
-    mvprintw((maxHeight / 2) + 3, menuStartX - 3, "->");
+    mvprintw((maxH / 2) + 3, menuStartX - 3, "->");
 
-    while (running) {
+    while ( running ) {
         int ch = getch();
         switch (ch) {
             case KEY_DOWN:
-                mvprintw((maxHeight / 2) + 2 + choice, menuStartX - 3, "  ");
-                choice = (choice % 3) + 1; // Loop back around to the first option
-                mvprintw((maxHeight / 2) + 2 + choice, menuStartX - 3, "->");
+                mvprintw((maxH / 2) + 2 + choice, menuStartX - 3, "  ");
+                choice = (choice % 3) + 1; 
+                mvprintw((maxH / 2) + 2 + choice, menuStartX - 3, "->");
                 break;
             case KEY_UP:
-                mvprintw((maxHeight / 2) + 2 + choice, menuStartX - 3, "  ");
-                choice = (choice == 1) ? 3 : choice - 1; // Loop back around to the last option
-                mvprintw((maxHeight / 2) + 2 + choice, menuStartX - 3, "->");
+                mvprintw((maxH / 2) + 2 + choice, menuStartX - 3, "  ");
+                choice = (choice == 1) ? 3 : choice - 1; 
+                mvprintw((maxH / 2) + 2 + choice, menuStartX - 3, "->");
                 break;
             case '\n':
                 if (choice == 1) {
@@ -247,7 +233,7 @@ int main() {
                         PrintCenter("Please try again or register.\n");
 			getch();
 			displayMenuPage();
-			mvprintw((maxHeight / 2) + 3, menuStartX - 3, "->");
+			mvprintw((maxH / 2) + 3, menuStartX - 3, "->");
                         initscr();
                         cbreak();
                         noecho();
@@ -259,10 +245,10 @@ int main() {
                         system(("./menu " + currentUser.username).c_str());
                         return 0;
                     }
-                } else if (choice == 2) {
-                    if (!registerUser(filename)) {
+                } else if ( choice == 2 ) {
+                    if ( !registerUser(filename) ) {
 		                displayMenuPage();
-			            mvprintw((maxHeight / 2) + 4, menuStartX - 3, "->");
+			            mvprintw((maxH / 2) + 4, menuStartX - 3, "->");
 			            initscr();
                         cbreak();
                         noecho();
@@ -271,7 +257,7 @@ int main() {
 		                PrintCenter("Registration Successful! Welcome, %s!\n", currentUser.username.c_str());
 			            getch();
 			            displayMenuPage();
-                        mvprintw((maxHeight / 2) + 4, menuStartX - 3, "->");
+                        mvprintw((maxH / 2) + 4, menuStartX - 3, "->");
                         initscr();
                         cbreak();
                         noecho();
