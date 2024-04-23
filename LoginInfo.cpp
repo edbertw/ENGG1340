@@ -168,8 +168,7 @@ bool loginUser(const string& filename, User& currentUser) {
             }
         }
     }
-    return false;
-}
+    return false;}
 
 // This function displays our menu page on the center (with colors) and takes no input parameters
 void displayMenuPage() {
@@ -199,8 +198,7 @@ void displayMenuPage() {
     attron(COLOR_PAIR(1)); // Turn on green text color
     for (size_t i = 0; i < lines.size(); ++i) {
         startX = (maxWidth - lines[i].length()) / 2; // Center the content horizontally
-        mvprintw(startY + i, startX, "%s", lines[i].c_str());
-    }
+        mvprintw(startY + i, startX, "%s", lines[i].c_str());}
     attroff(COLOR_PAIR(1)); // Turn off green text color
 
     // Display menu options
