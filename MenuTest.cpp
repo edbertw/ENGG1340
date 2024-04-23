@@ -1,3 +1,4 @@
+#include "Menu.h"
 #include <ncurses.h>
 #include <string>
 #include <vector>
@@ -5,7 +6,7 @@
 #include <fstream>
 #include <algorithm>
 #include <cstdlib>
-#include "Menu.h"
+
 using namespace std;
 
 string filename="users.txt";
