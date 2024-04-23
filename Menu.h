@@ -2,6 +2,7 @@
 #define MENU_H
 
 #include <string>
+using namespace std;
 
 //Structure Definition for User
 struct User {
