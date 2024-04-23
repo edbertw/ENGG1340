@@ -1,9 +1,9 @@
-FLAGS = -pedantic-errors -std=c++11
+.FLAGS = -pedantic-errors -std=c++11
 
 Snake_Game : Snake_Game.cpp
 	g++ $(FLAGS) $^ -o $@ -lncurses
 
-menu : MenuTest.cpp
+menu : MenuTest.cpp Menu.h
 	g++ $(FLAGS) $^ -o $@ -lncurses
 
 login : LoginInfo.cpp Login.h 
