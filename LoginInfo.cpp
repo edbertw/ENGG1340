@@ -101,7 +101,7 @@ bool registerUser(const string& filename) {
 bool loginUser(const string& filename, User& currentUser) {
     clear();
     int att = 3;
-    string username, pass;
+    string uname, pass;
     bool wrong = false;
     bool exist = false;
     User user;
