@@ -2,7 +2,6 @@
 #define LOGIN_H
 
 #include <string>
-using namespace std;
 //Structure declaration for user
 struct User {
   string username;
