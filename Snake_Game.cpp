@@ -10,7 +10,7 @@ using namespace std;
 
 const int width = 40;
 const int height = 20;
-int x, y, fruitX, fruitY, score, sleepDuration=100;
+int x, y, fX, fY, score, sleepDuration=100;
 bool gameOver, growTail=false, restart=false;
 vector<pair<int, int>> tail;
 vector<pair<int, int>> blocks;
