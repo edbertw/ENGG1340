@@ -23,28 +23,20 @@ void leaderboard(const string& filename) { //Takes the string name of file as in
     clear();
     
     vector<User> users;
-
-    // Read all users and their scores from the file
     ifstream fin(filename);
     string uname, pwd;
     int hscore;
-    while (fin >> uname >> pwd >> hscore) {
+    while (fin >>uname >>pwd >>hscore) {
         users.emplace_back(User{uname, pwd, hscore});
     }
     fin.close();
-
-    // Sort the users by their highest scores in descending order
     sort(users.begin(), users.end(), [](const User& a, const User& b) {
         return a.highestScore > b.highestScore;
     });
-
-    // Center the leaderboard title and column headers
     int maxWidth, maxHeight;
     getmaxyx(stdscr, maxHeight, maxWidth);
-    int startY = (maxHeight -users.size() - 6)/2; // Subtracting the number of lines to be printed
-    int startX = (maxWidth -20)/2; // Adjusting width for the leaderboard content
-
-    // Display the leaderboard
+    int startY = (maxHeight-users.size()-6)/2; 
+    int startX = (maxWidth-20)/2; 
     mvprintw(startY, startX, "Leaderboard:");
     mvprintw(startY +1, startX, "Username\t\tScore");
     mvprintw(startY +2, startX, "-------------------------");
@@ -53,12 +45,10 @@ void leaderboard(const string& filename) { //Takes the string name of file as in
         mvprintw(startY+i+3, startX, "%s\t\t%d", users[i].username.c_str(), users[i].highestScore);
     }
     
-    // Display return instruction
     mvprintw(startY+users.size()+4, startX, "Press 'm' to return to the menu");
 
-    refresh(); // Refresh the screen to display changes
+    refresh(); 
 
-    // Wait for user to press 'm' to return to menu
     while (true) {
         int ch = getch();
         if (ch == 'm' || ch == 'M') {
@@ -68,16 +58,15 @@ void leaderboard(const string& filename) { //Takes the string name of file as in
         }
     }
 }
-// displays Menu Details on a new screen
+// displays Menu Details on a new screen by clearing and displaying
 void displayMenuPage() {
     int maxWidth, maxHeight;
-    getmaxyx(stdscr, maxHeight, maxWidth); // Get the size of the terminal window
+    getmaxyx(stdscr, maxHeight, maxWidth); 
 
-    clear(); // Clear the screen using NCurses
+    clear(); 
 
-    // Use NCurses attributes for color if desired
     start_color();
-    init_pair(1, COLOR_GREEN, COLOR_BLACK); // Green text on black background
+    init_pair(1, COLOR_GREEN, COLOR_BLACK); 
 
     vector<string> lines = {
         "=============================================",
@@ -89,28 +78,24 @@ void displayMenuPage() {
         "     \/     \/     \/     \/    \/     \/ ",
         "============================================="
     };
-
-    int startY = (maxHeight - lines.size() - 4) / 2; // Center the content vertically
+    int startY = (maxHeight-lines.size()-4) /2;
     int startX = 0;
     
-    attron(COLOR_PAIR(1)); // Turn on green text color
+    attron(COLOR_PAIR(1)); 
     for (size_t i = 0; i < lines.size(); ++i) {
-        startX = (maxWidth-lines[i].length()) / 2; // Center the content horizontally
+        startX = (maxWidth-lines[i].length()) / 2; 
         mvprintw(startY + i, startX, "%s", lines[i].c_str());
     }
-    attroff(COLOR_PAIR(1)); // Turn off green text color
-
-    // Display menu options
-    startX = (maxWidth - 20) / 2; // "20" is the approximate length of the longest menu string
+    attroff(COLOR_PAIR(1)); 
+    startX = (maxWidth - 20) / 2; 
     mvprintw(startY + lines.size()+1, startX, "1. Start Game");
     mvprintw(startY + lines.size()+2, startX, "2. Leaderboard");
     mvprintw(startY + lines.size()+3, startX, "3. Quit");
-    //mvprintw(startY + lines.size() + 1, startX - 3, "->"); // Arrow to highlight option
 
-    refresh(); // Refresh the screen to display changes
+    refresh(); 
 }
 
-// Provide the main user interface for the game
+// Provide the main user interface for the game and allows user to input their choice to proceed to playing the game.
 int main(int argc, char* argv[]) {
     initscr();
     cbreak();
@@ -127,21 +112,20 @@ int main(int argc, char* argv[]) {
 
     displayMenuPage();
 
-    // Highlight the first option initially
-    mvprintw((maxHeight / 2)+3, menuStartX - 3, "->");
+    mvprintw((maxHeight/2)+3, menuStartX - 3, "->");
 
     while (running) {
         int ch = getch();
         switch (ch) {
             case KEY_DOWN:
-                mvprintw((maxHeight / 2) + 2 + choice, menuStartX - 3, "  ");
-                choice = (choice % 3) + 1;
-                mvprintw((maxHeight / 2) + 2 + choice, menuStartX - 3, "->");
+                mvprintw((maxHeight/2) + 2 + choice, menuStartX-3, "  ");
+                choice = (choice%3) + 1;
+                mvprintw((maxHeight/2) + 2 + choice, menuStartX -3, "->");
                 break;
             case KEY_UP:
-                mvprintw((maxHeight / 2) + 2 + choice, menuStartX - 3, "  ");
+                mvprintw((maxHeight/2) + 2 + choice, menuStartX-3, "  ");
                 choice = (choice == 1) ? 3 : choice - 1; 
-                mvprintw((maxHeight / 2) + 2 + choice, menuStartX - 3, "->");
+                mvprintw((maxHeight/2) + 2 + choice, menuStartX-3, "->");
                 break;
             case '\n':
                 if (choice == 1) {
