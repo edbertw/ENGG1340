@@ -8,6 +8,13 @@
 #include <thread>
 using namespace std; 
 
+const int width = 40;
+const int height = 20;
+int x, y, fruitX, fruitY, score, sleepDuration=100;
+bool gameOver, growTail=false, restart=false;
+vector<pair<int, int>> tail;
+vector<pair<int, int>> blocks;
+
 struct User { // Make user struct. Refers to the structure of user, pass, and score on user.txt file.
     string username;
     string password;
