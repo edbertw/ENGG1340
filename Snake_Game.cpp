@@ -20,12 +20,6 @@ bool gameOver, growTail=false, restart=false;
 vector<pair<int, int>> tail;
 vector<pair<int, int>> blocks;
 
-struct User { // Make user struct. Refers to the structure of user, pass, and score on user.txt file.
-    string username;
-    string password;
-    int highestScore;
-};
-
 User currentUser; // Make variable for currentUser, will be updated during gamerun.
 
 void InitColors() {
@@ -445,7 +439,7 @@ int main(int argc, char*argv[]) {
 	    	sleepDuration=100; // Resets the sleep duration to amount at start if restart is chosen
         	continue;
     	} else {
-        	break // Finisihes the game if quit is chosen
+        	break; // Finisihes the game if quit is chosen
     	};
     }
     while (true); // Game ended :(
