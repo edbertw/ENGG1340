@@ -211,7 +211,24 @@ void Draw(){
 }
 
 void Input() {
-  
+  int c = getch(); // Movement using getch, always waiting for input at any time. 
+    switch(c) { // Conditional movements based on key pressed (self-explanatory)
+    case KEY_LEFT:
+        if (dir != RIGHT) dir = LEFT;
+        break;
+    case KEY_RIGHT:
+        if (dir != LEFT) dir = RIGHT;
+        break;
+    case KEY_UP:
+        if (dir != DOWN) dir = UP;
+        break;
+    case KEY_DOWN:
+        if (dir != UP) dir = DOWN;
+        break;
+    case 'q':
+        gameOver = true;
+        break;
+    }
 }
 
 void Logic() {
@@ -362,7 +379,30 @@ void GameOver(){
 } // Game Over function that displays user's score, highscore, and prompts the user to either quit the game or restart the game
 
 void updateHighestScore(){
-	
+    vector<User> users;
+    bool found = false;
+    ifstream fileIn(filename);
+    User user;
+    while (fileIn >> user.username >> user.password>>user.highestScore) { // Updates the highest score of the current use.
+        if (user.username == currentUser.username) {
+            found = true;
+            user.highestScore = max(user.highestScore, currentUser.highestScore); // Update if only the current score is higher
+            currentUser.highestScore = score; 
+        }
+        users.push_back(user);
+    }
+    fileIn.close();
+
+    if (!found) { // In case the user wasn't found, add new user
+        users.push_back(currentUser);
+    }
+
+    // Rewrite the file with updated scores
+    ofstream fileOut(filename, ios::trunc | ios::out);
+    for (const auto& u : users) {
+        fileOut << u.username <<" "<< u.password <<" "<< u.highestScore << endl;
+    }
+    fileOut.close(); 
 }
 
 int main(int argc, char*argv[]) {
@@ -383,30 +423,30 @@ int main(int argc, char*argv[]) {
 
     // Starts THE GAME
     do {
-    Setup(); // Reset game setting for ncurses
+    	Setup(); // Reset game setting for ncurses
     
-    while (!gameOver) { // This is the main loop where the game is running.
-        Draw(); // Update the display each loop
-        Input(); // Takes input from user keyboard if it is inputted
-        Logic(); // Updates the game whether it has reached collision and controls the movement
+    	while (!gameOver) { // This is the main loop where the game is running.
+        	Draw(); // Update the display each loop
+        	Input(); // Takes input from user keyboard if it is inputted
+        	Logic(); // Updates the game whether it has reached collision and controls the movement
 
-	if (dir != STOP) {
+		if (dir != STOP) {
 		std::this_thread::sleep_for(std::chrono::milliseconds(sleepDuration)); // Delay for 100 miliseconds, gets faster as the game goes though.
+    		}
+    	} 
+
+    	if (score >currentUser.highestScore) { 
+        	currentUser.highestScore = score; // Gameplay loop already ended, this updates the score of the user.
+		updateHighestScore("users.txt"); // Call the function to update Highest Score on users.txt
     	}
-    } 
+    	GameOver(); // Goes to the game over screen.
 
-    if (score >currentUser.highestScore) { 
-        currentUser.highestScore = score; // Gameplay loop already ended, this updates the score of the user.
-	updateHighestScore("users.txt"); // Call the function to update Highest Score on users.txt
-    }
-    GameOver(); // Goes to the game over screen.
-
-    if (restart) {
-	    sleepDuration=100; // Resets the sleep duration to amount at start if restart is chosen
-        continue;
-    } else {
-        break // Finisihes the game if quit is chosen
-    };
+    	if (restart) {
+	    	sleepDuration=100; // Resets the sleep duration to amount at start if restart is chosen
+        	continue;
+    	} else {
+        	break // Finisihes the game if quit is chosen
+    	};
     }
     while (true); // Game ended :(
 
