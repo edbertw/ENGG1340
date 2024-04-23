@@ -20,6 +20,7 @@ bool gameOver, growTail=false, restart=false;
 vector<pair<int, int>> tail;
 vector<pair<int, int>> blocks;
 
+Direction dir;
 User currentUser; // Make variable for currentUser, will be updated during gamerun.
 
 void InitColors() {
