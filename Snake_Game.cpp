@@ -1,3 +1,4 @@
+#include "Main.h"
 #include <fstream>
 #include <iostream>
 #include <string>
@@ -6,6 +7,10 @@
 #include <ctime>
 #include <chrono>
 #include <thread>
+#include <cstring>
+#include <algorithm>
+#include <sstream>
+#include <vector>
 using namespace std; 
 
 const int width = 40;
@@ -35,7 +40,76 @@ void InitColors() {
     init_pair(3, COLOR_GREEN, COLOR_BLACK); // Green on black text
 }
 
-// PUT THE OTHER FUNCTIONS BROSSSSS. Change the function or variable name if needed, this is the main algorithm though.
+bool isValidFruitPosition(int x, int y, const vector<pair<int, int>>&snake, const vector<pair<int, int>>& blocks) {
+
+    for (const auto& segment : snake) {
+        if (fX == segment.first && fY == segment.second) {
+            return false; // Checks if fruit overlaps with the snake. If overlap, invalid positon.
+        }
+    }
+
+    for (const auto& block : blocks) {
+        // Check all 4 coordinates of the 2x2 block
+        for (int bx = 0; bx < 2; ++bx) {
+            for (int by = 0; by < 2; ++by) {
+                if (x == block.first + bx && y == block.second + by) {
+                    return false; // Check if the fruit's position intersects with a block. If overlap, invalid position.
+                }
+            }
+        }
+    }
+    return true; // No intersection with any blocks, nor with the snake
+} // Checks if fruit will intersect with block or snake. 
+// If yes, the position is invalid, and false is returned. If no, the position is valid, and true is returned.
+
+void spawnFruit() {
+    do {
+        fX = rand() % width;
+        fY = rand() % height;
+    } while (!isValidFruitPosition(fX, fY, tail, blocks)); 
+} // Function that spawns fruit. Keeps generating fruit coordinates until one is valid.
+
+bool isValidBlockPosition(int x, int y, const vector<pair<int, int>>& blocks, const vector<pair<int, int>>& snake, int snakeX, int snakeY, int fX, int fY) {
+    
+    for (const auto& block : blocks) {
+        if ((x == block.first || x == block.first + 1) && 
+            (y == block.second || y == block.second + 1)) {
+            return false; // Checks if new block would intersect with an existing block. If overlap, invalid position.
+        }
+    }
+
+    if ((x == snakeX || x + 1 == snakeX) && (y == snakeY || y + 1 == snakeY)) {
+        return false; // Checks if new block would intersect with snake head. If overlap, invalid position.
+    }
+    for (const auto& segment : snake) {
+        if ((x == segment.first || x + 1 == segment.first) && 
+            (y == segment.second || y + 1 == segment.second)) {
+            return false; // Checks if new block would intersect with snake's body. If overlap, invalid position.
+        }
+    }
+
+    for (int fx = fX; fx <= fX + 1; fx++) {
+        for (int fy = fY; fy <= fY + 1; fy++) {
+            if (x == fx && y == fy) {
+                return false; // Checks if new block would intersect with a fruit's position. If overlap, invalid position.
+            }
+        }
+    }
+
+    return true; // Valid position, no intersections
+} // Checks if new block will intersect with existing block, fruit or snake.
+// If yes, the position is invalid, and false is returned. If no, the position is valid, and true is returned.
+
+void spawnBlock(const vector<pair<int, int>>& snake, int snakeX, int snakeY, int fX, int fY) {
+    int newX, newY;
+    do {
+        newX = rand() % (width - 2); // Check if there's space for the block
+        newY = rand() % (height - 2);
+    } while (!isValidBlockPosition(newX, newY, blocks, snake, snakeX, snakeY, fX, fY)); 
+
+    blocks.push_back(make_pair(newX, newY)); // Add the new block
+} // Function that spawns block. Keeps generating block coordinates until one is valid.
+
 void Setup() {
     initscr(); 
     clear(); 
