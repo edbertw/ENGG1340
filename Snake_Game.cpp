@@ -33,6 +33,14 @@ void Logic(){
   
 }
 
+void GameOver(){
+	
+}
+
+void updateHighestScore(){
+	
+}
+
 int main(int argc, char*argv[]) {
     string filename = "users.txt"; // This is the file for username and scores
     User user; // Make a variable user type User
