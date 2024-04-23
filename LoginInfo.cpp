@@ -95,7 +95,8 @@ bool registerUser(const string& filename) {
         fout.close();
         return true;
     }
-    getch(); }
+    getch(); 
+}
 
 bool loginUser(const string& filename, User& currentUser) {
     clear();
