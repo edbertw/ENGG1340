@@ -186,8 +186,8 @@ void displayMenuPage() {
 
     attron(COLOR_PAIR(1)); 
     for (size_t i = 0; i < lines.size(); ++i) {
-        startX = (maxW - lines[i].length()) / 2; 
-        mvprintw(sY + i, startX, "%s", lines[i].c_str());
+        sX = (maxW - lines[i].length()) / 2; 
+        mvprintw(sY + i, sX, "%s", lines[i].c_str());
     }
     attroff(COLOR_PAIR(1)); 
 
