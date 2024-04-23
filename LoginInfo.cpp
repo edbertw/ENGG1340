@@ -255,7 +255,7 @@ int main() {
                         noecho();
                         keypad(stdscr, TRUE);
 		            } else {
-		                PrintCenter("Registration Successful! Welcome, %s!\n", currentUser.username.c_str());
+		                PrintCenter("Registration Successful!");
 			            getch();
 			            displayMenuPage();
                         mvprintw((maxH / 2) + 4, menuStartX - 3, "->");
