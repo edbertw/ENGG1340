@@ -5,6 +5,7 @@
 #include <fstream>
 #include <algorithm>
 #include <cstdlib>
+#include "Menu.h"
 using namespace std;
 
 string filename="users.txt";
