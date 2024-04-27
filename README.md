@@ -1,3 +1,5 @@
+Video Link: https://drive.google.com/file/d/1cYX-PJWSyfwS4fHjopst5xwQTJm0vkUB/view?usp=sharing
+
 Group 200 --> Team members:
 Howard Anggawijaya (3036259035),
 Noah Alexander Lie (3036259047),
