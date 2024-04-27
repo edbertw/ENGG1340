@@ -23,8 +23,9 @@ LIST OF FEATURES :
 - Leaderboard and Storing Usernames, Passwords, Highscore = We implemented File I/O to keep track of changing highscores as well as initial input of username and password for our leaderboard.
 - Automated moving and increasing size snake = Implemented STL Container (Vectors) with pair of integers to allow snake to increase in size by pushing to vector.
 - Block Generation = STL Containers (Vectors) with pair of integers to store multiple element blocks that randomly appear on the map.
-- Game Environment = Use of ncurses library
+- New and Improved Game Environment = Use of ncurses library
 - Restart Game = Calling and Recalling functions
+- Increase in snake speed everytime it eats a token = Using time library to reduce time sleep durations
 
   
 LIST OF HEADERS & LIBRARIES USED:
