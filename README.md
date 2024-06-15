@@ -1,13 +1,14 @@
-Video Link: https://drive.google.com/file/d/1cYX-PJWSyfwS4fHjopst5xwQTJm0vkUB/view?usp=sharing
+## Video Link
+https://drive.google.com/file/d/1cYX-PJWSyfwS4fHjopst5xwQTJm0vkUB/view?usp=sharing
 
-Group 200 --> Team members:
+## Group 200 
 Howard Anggawijaya (3036259035),
 Noah Alexander Lie (3036259047),
 Alexander Briant Arsa Pratama (3036184096),
 Edbert Widjaja (3036240503),
 Sebastian Nicholas Kusuma (3036191300)
 
-WELCOME TO OUR GAME, SNAKE !!
+## WELCOME TO OUR GAME, SNAKE !!
 When you first start the game, you will be given 3 options to Login, Register yourself and Quit. Since you are probably a new player, you must start the game and register your username and password, then you will need to login again with the username and password you have registered.
 
 If you've played already, then you can simply login, enter your username and password to start game.
@@ -18,7 +19,7 @@ Your goal is to collect as many tokens as possible. Each token collected grants 
 
 In the game of Snake, the player uses the arrow keys to move a "snake" around the board. As the snake finds food, it eats the food, and thereby grows larger. The game ends when the snake either moves off the screen or moves into itself. The goal is to make the snake as large as possible before that happens.
 
-LIST OF FEATURES :
+## LIST OF FEATURES 
 - Randomly generating tokens and blocks = Generating random game situations as the position of blocks and tokens vary for every game.
 - Leaderboard and Storing Usernames, Passwords, Highscore = We implemented File I/O to keep track of changing highscores as well as initial input of username and password for our leaderboard.
 - Automated moving and increasing size snake = Implemented STL Container (Vectors) with pair of integers to allow snake to increase in size by pushing to vector.
@@ -28,7 +29,7 @@ LIST OF FEATURES :
 - Increase in snake speed everytime it eats a token = Using time library to reduce time sleep durations
 
   
-LIST OF HEADERS & LIBRARIES USED:
+## LIST OF HEADERS & LIBRARIES USED:
 - ncurses.h = creates our game's user interface and allows automated moving and continuous input of arrow keys
 - cstdlib = random generation of blocks and tokens
 - vector = STL container to store blocks and snake
@@ -41,7 +42,7 @@ LIST OF HEADERS & LIBRARIES USED:
 - sstream = string input for menu and interface
 - string = string text and manipulations
 
-EXECUTION INSTRUCTIONS:
+## EXECUTION INSTRUCTIONS:
 Since we will also be providing a makefile for efficiency purposes, simply do make Snake_Game, then make menu, then make login, then make Run to compile all of the targets and run the program. *IMPORTANT* Please ignore all warning messages. The warning messages will not affect our program in any way. You can do make clean to remove any targets that have been made after compilation.
 
   
