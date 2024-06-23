@@ -2,11 +2,11 @@
 https://drive.google.com/file/d/1cYX-PJWSyfwS4fHjopst5xwQTJm0vkUB/view?usp=sharing
 
 ## Group 200 
-Howard Anggawijaya (3036259035),
-Noah Alexander Lie (3036259047),
-Alexander Briant Arsa Pratama (3036184096),
-Edbert Widjaja (3036240503),
-Sebastian Nicholas Kusuma (3036191300)
+1. Howard Anggawijaya (3036259035)
+2. Noah Alexander Lie (3036259047)
+3. Alexander Briant Arsa Pratama (3036184096)
+4. Edbert Widjaja (3036240503)
+5. Sebastian Nicholas Kusuma (3036191300)
 
 ## WELCOME TO OUR GAME, SNAKE !!
 When you first start the game, you will be given 3 options to Login, Register yourself and Quit. Since you are probably a new player, you must start the game and register your username and password, then you will need to login again with the username and password you have registered.
